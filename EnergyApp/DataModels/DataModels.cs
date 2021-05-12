@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace EnergyApp.DataModels
 {
     class DataModels
     {
+
     }
 
+    [Serializable]
     public class Day
     {
+        [XmlElement("Date")]
         public DateTime Date;
+        [XmlElement("Enerygy")]
         public double Energy;
-        public double price;
+        [XmlElement("Price")]
+        public double Price;
     }
 
+    [Serializable]
     public enum Location
     {
         NotSet = -1,
@@ -22,22 +29,31 @@ namespace EnergyApp.DataModels
         Offshore = 1
     }
 
-    public class EnergySource
+    public class GenerationReport
+    {
+        public List<WindGenerator> Wind;
+        public List<GasGenerator> Gas;
+        public List<CoalGenerator> Coal;
+    }
+
+    [Serializable]
+    public class EnergyGenerator
     {
         public string Name;
 
         public List<Day> Generation;
     }
-    public class Wind : EnergySource
+
+    public class WindGenerator : EnergyGenerator
     {
         public Location Location;
     }
-    public class Gas : EnergySource
+    public class GasGenerator : EnergyGenerator
     {
         public double EmissionsRating;
     }
 
-    public class Coal : EnergySource
+    public class CoalGenerator : EnergyGenerator
     {
         public double TotalHeatGeneration;
         public double ActualNetGeneration;
