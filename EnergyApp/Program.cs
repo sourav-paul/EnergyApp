@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnergyApp.Misc;
+using System;
 
 namespace EnergyApp
 {
@@ -7,6 +8,10 @@ namespace EnergyApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            var data = new XmlParser();
+
+            data.DeserializeXml();
         }
     }
 }
