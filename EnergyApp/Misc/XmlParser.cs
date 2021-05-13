@@ -1,4 +1,6 @@
 ﻿using EnergyApp.DataModels;
+using EnergyApp.DataModels.Output;
+using EnergyApp.DataModels.Report;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,9 +14,12 @@ namespace EnergyApp.Misc
     {
         public GenerationReport GenerationReport;
 
+        public GenerationOutput GenerationOutput;
+
         public XmlParser()
         {
             GenerationReport = new GenerationReport();
+            GenerationOutput = new GenerationOutput();
         }
 
         public void DeserializeXml()
@@ -26,9 +31,20 @@ namespace EnergyApp.Misc
                 GenerationReport = (GenerationReport)xmlSerializer.Deserialize(reader);
             }
 
-            Console.WriteLine(GenerationReport.Wind.Count);
-            Console.WriteLine(GenerationReport.Gas.Count);
-            Console.WriteLine(GenerationReport.Coal.Count);
+            xmlSerializer = new XmlSerializer(typeof(GenerationOutput));
+
+            using (Stream reader = new FileStream(ConfigurationManager.AppSettings["output-directory"], FileMode.Open))
+            {
+                GenerationOutput = (GenerationOutput)xmlSerializer.Deserialize(reader);
+            }
+
+            //Console.WriteLine(GenerationReport.Wind.Count);
+            //Console.WriteLine(GenerationReport.Gas.Count);
+            //Console.WriteLine(GenerationReport.Coal.Count);
+
+            Console.WriteLine(GenerationOutput.ActualHeatRates.Count);
+            Console.WriteLine(GenerationOutput.MaxEmissionGenerators.Count);
+            Console.WriteLine(GenerationOutput.Totals.Count);
         }
     }
 }
