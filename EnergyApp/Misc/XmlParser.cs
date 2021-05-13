@@ -22,7 +22,7 @@ namespace EnergyApp.Misc
             GenerationOutput = new GenerationOutput();
         }
 
-        public void DeserializeXml()
+        public void ReadInput()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(GenerationReport));
 
@@ -30,21 +30,15 @@ namespace EnergyApp.Misc
             {
                 GenerationReport = (GenerationReport)xmlSerializer.Deserialize(reader);
             }
+        }
 
-            xmlSerializer = new XmlSerializer(typeof(GenerationOutput));
+        public void WriteOutput()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(GenerationOutput));
 
-            using (Stream reader = new FileStream(ConfigurationManager.AppSettings["output-directory"], FileMode.Open))
-            {
-                GenerationOutput = (GenerationOutput)xmlSerializer.Deserialize(reader);
-            }
-
-            //Console.WriteLine(GenerationReport.Wind.Count);
-            //Console.WriteLine(GenerationReport.Gas.Count);
-            //Console.WriteLine(GenerationReport.Coal.Count);
-
-            Console.WriteLine(GenerationOutput.ActualHeatRates.Count);
-            Console.WriteLine(GenerationOutput.MaxEmissionGenerators.Count);
-            Console.WriteLine(GenerationOutput.Totals.Count);
+            TextWriter writer = new StreamWriter(ConfigurationManager.AppSettings["test-output-directory"]);
+            
+            xmlSerializer.Serialize(writer, GenerationOutput);
         }
     }
 }

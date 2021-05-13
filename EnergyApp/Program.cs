@@ -11,7 +11,7 @@ namespace EnergyApp
 
             var data = new XmlParser();
 
-            data.DeserializeXml();
+            data.ReadInput();
         }
     }
 }
