@@ -18,10 +18,13 @@ namespace EnergyApp.Misc
 
         public GenerationOutput GenerationOutput;
 
+        public ReferenceData ReferenceData;
+
         public XmlParser()
         {
             GenerationReport = new GenerationReport();
             GenerationOutput = new GenerationOutput();
+            ReferenceData = new ReferenceData();
         }
 
         public void ReadInput()
@@ -38,15 +41,12 @@ namespace EnergyApp.Misc
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ReferenceData));
 
-            ReferenceData ReferenceData = new ReferenceData();
+            ReferenceData = new ReferenceData();
 
             using (Stream reader = new FileStream(ConfigurationManager.AppSettings["reference-directory"], FileMode.Open))
             {
                 ReferenceData = (ReferenceData)xmlSerializer.Deserialize(reader);
             }
-
-            Console.WriteLine(ReferenceData.Factors.EmissionsFactor.High);
-            Console.WriteLine(ReferenceData.Factors.ValueFactor.High);
 
             return ReferenceData;
         }
