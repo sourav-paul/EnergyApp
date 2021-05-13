@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace EnergyApp.Misc
@@ -30,6 +32,23 @@ namespace EnergyApp.Misc
             {
                 GenerationReport = (GenerationReport)xmlSerializer.Deserialize(reader);
             }
+        }
+
+        public ReferenceData ReadReference()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ReferenceData));
+
+            ReferenceData ReferenceData = new ReferenceData();
+
+            using (Stream reader = new FileStream(ConfigurationManager.AppSettings["reference-directory"], FileMode.Open))
+            {
+                ReferenceData = (ReferenceData)xmlSerializer.Deserialize(reader);
+            }
+
+            Console.WriteLine(ReferenceData.Factors.EmissionsFactor.High);
+            Console.WriteLine(ReferenceData.Factors.ValueFactor.High);
+
+            return ReferenceData;
         }
 
         public void WriteOutput()
