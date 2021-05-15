@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GeneratorFactorMap>
+  
+  <OffshoreWind>
+    <ValueFactor>Low</ValueFactor>
+    <EmissionsFactor>NotApplicable</EmissionsFactor>
+  </OffshoreWind>
+
+  <OnshoreWind>
+    <ValueFactor>High</ValueFactor>
+    <EmissionsFactor>NotApplicable</EmissionsFactor>
+  </OnshoreWind>
+
+  <Gas>
+    <ValueFactor>Medium</ValueFactor>
+    <EmissionsFactor>Medium</EmissionsFactor>
+  </Gas>
+
+  <Coal>
+    <ValueFactor>Medium</ValueFactor>
+    <EmissionsFactor>High</EmissionsFactor>
+  </Coal>
+  
+</GeneratorFactorMap>

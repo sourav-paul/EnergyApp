@@ -18,12 +18,10 @@ namespace EnergyApp.Calculator
             return day.Energy * emissionRating * emissionsFactor.Medium;
         }
 
-        public void ActualHeatRate(double totalHeatInput, double actualNetGeneration)
+        public double ActualHeatRate(double totalHeatInput, double actualNetGeneration)
         {
-
+            return totalHeatInput * actualNetGeneration;
         }
-
-
     }
 
     public class GeneratorFactorMap
