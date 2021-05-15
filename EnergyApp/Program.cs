@@ -9,9 +9,7 @@ namespace EnergyApp
         {
             Console.WriteLine("Hello World!");
 
-            var data = new XmlParser();
-
-            data.DeserializeXml();
+            XmlParser.ReadMap();
         }
     }
 }
