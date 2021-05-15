@@ -1,4 +1,5 @@
 ﻿using EnergyApp.DataModels;
+using EnergyApp.DataModels.GeneratorFactor;
 using EnergyApp.DataModels.Output;
 using EnergyApp.DataModels.Report;
 using System;
@@ -14,34 +15,25 @@ namespace EnergyApp.Misc
 {
     class XmlParser
     {
-        public GenerationReport GenerationReport;
-
-        public GenerationOutput GenerationOutput;
-
-        public ReferenceData ReferenceData;
-
-        public XmlParser()
-        {
-            GenerationReport = new GenerationReport();
-            GenerationOutput = new GenerationOutput();
-            ReferenceData = new ReferenceData();
-        }
-
-        public void ReadInput()
+        public static GenerationReport ReadInput()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(GenerationReport));
+
+            GenerationReport GenerationReport = new GenerationReport();
 
             using (Stream reader = new FileStream(ConfigurationManager.AppSettings["input-directory"], FileMode.Open))
             {
                 GenerationReport = (GenerationReport)xmlSerializer.Deserialize(reader);
             }
+
+            return GenerationReport;
         }
 
-        public ReferenceData ReadReference()
+        public static ReferenceData ReadReference()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ReferenceData));
 
-            ReferenceData = new ReferenceData();
+            ReferenceData ReferenceData = new ReferenceData();
 
             using (Stream reader = new FileStream(ConfigurationManager.AppSettings["reference-directory"], FileMode.Open))
             {
@@ -51,12 +43,26 @@ namespace EnergyApp.Misc
             return ReferenceData;
         }
 
-        public void WriteOutput()
+        public static GeneratorFactorMap ReadMap()
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(GeneratorFactorMap));
+
+            GeneratorFactorMap GeneratorFactorMap = new GeneratorFactorMap();
+
+            using (Stream reader = new FileStream(ConfigurationManager.AppSettings["generator-factor-map-directory"], FileMode.Open))
+            {
+                GeneratorFactorMap = (GeneratorFactorMap)xmlSerializer.Deserialize(reader);
+            }
+
+            return GeneratorFactorMap;
+        }
+
+        public static void WriteOutput(GenerationOutput GenerationOutput)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(GenerationOutput));
 
             TextWriter writer = new StreamWriter(ConfigurationManager.AppSettings["test-output-directory"]);
-            
+
             xmlSerializer.Serialize(writer, GenerationOutput);
         }
     }
