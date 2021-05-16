@@ -1,5 +1,5 @@
 ﻿using EnergyApp.DataModels.Report;
-using EnergyApp.Misc;
+using EnergyApp.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +24,7 @@ namespace EnergyApp.DataModels.GeneratorFactor
 
     public class Generator
     {
-        public Factor ValeuFactor = Factor.NotSet;
+        public Factor ValueFactor = Factor.NotSet;
         public Factor EmissionsFactor = Factor.NotSet;
     }
 

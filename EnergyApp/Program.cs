@@ -1,4 +1,4 @@
-﻿using EnergyApp.Misc;
+﻿using EnergyApp.Controllers;
 using System;
 
 namespace EnergyApp
