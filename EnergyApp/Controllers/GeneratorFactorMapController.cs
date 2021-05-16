@@ -11,8 +11,21 @@ namespace EnergyApp.Controllers
         public double? EmissionsFactor;
     }
 
-    class GeneratorFactorMapController
+    public class GeneratorFactorMapController
     {
+        private static GeneratorFactorMapController instance = null;
+        public static GeneratorFactorMapController Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GeneratorFactorMapController();
+                }
+                return instance;
+            }
+        }
+
         private ReferenceData ReferenceData;
         private GeneratorFactorMap GeneratorFactorMap;
 
@@ -34,7 +47,7 @@ namespace EnergyApp.Controllers
         {
             FactorPair FactorPair = new FactorPair();
 
-            if (generator.Equals(typeof(WindGenerator)))
+            if (generator.GetType().Equals(typeof(WindGenerator)))
             {
                 if (((WindGenerator)generator).Location == Location.Offshore)
                 {
@@ -47,12 +60,12 @@ namespace EnergyApp.Controllers
                     FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.OnshoreWind.EmissionsFactor);
                 }
             }
-            else if (generator.Equals(typeof(GasGenerator)))
+            else if (generator.GetType().Equals(typeof(GasGenerator)))
             {
                 FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.Gas.ValueFactor);
                 FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.Gas.EmissionsFactor);
             }
-            else if (generator.Equals(typeof(CoalGenerator)))
+            else if (generator.GetType().Equals(typeof(CoalGenerator)))
             {
                 FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.Coal.ValueFactor);
                 FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.Coal.EmissionsFactor);

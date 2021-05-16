@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 namespace EnergyApp.Controllers
 {
-    class XmlParser
+    public class XmlParser
     {
         public static GenerationReport ReadInput()
         {

@@ -15,7 +15,13 @@ namespace EnergyApp.DataModels.Output
     public class Generator
     {
         public string Name;
-        public double Total;
+        public double? Total;
+
+        public Generator(string name = "Unnamed")
+        {
+            Name = name;
+            Total = 0;
+        }
     }
 
     public class Day
