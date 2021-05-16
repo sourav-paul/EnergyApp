@@ -8,17 +8,25 @@ namespace EnergyApp.Controllers
 {
     public class EnergyCalculator
     {
-        public double DailyGenerationValue(Day day, double valueFactor)
+        public static double? DailyGenerationValue(Day day, double? valueFactor)
         {
-            return day.Energy * day.Price * valueFactor;
+            if (valueFactor !=null)
+            {
+                return day.Energy * day.Price * valueFactor;
+            }
+            else
+            {
+                Console.WriteLine("Value Factor null");
+                return null;
+            }
         }
 
-        public double DailyEmissions(Day day, double emissionRating, EmissionsFactor emissionsFactor)
+        public static double? DailyEmissions(double energy, double emissionRating, double? emissionsFactor)
         {
-            return day.Energy * emissionRating * emissionsFactor.Medium;
+            return energy * emissionRating * emissionsFactor;
         }
 
-        public double ActualHeatRate(double totalHeatInput, double actualNetGeneration)
+        public static double ActualHeatRate(double totalHeatInput, double actualNetGeneration)
         {
             return totalHeatInput * actualNetGeneration;
         }

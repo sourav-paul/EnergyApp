@@ -11,9 +11,9 @@ using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace EnergyApp.Misc
+namespace EnergyApp.Controllers
 {
-    class XmlParser
+    public class XmlParser
     {
         public static GenerationReport ReadInput()
         {

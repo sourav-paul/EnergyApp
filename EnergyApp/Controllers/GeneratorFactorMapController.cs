@@ -1,15 +1,31 @@
 ﻿using EnergyApp.DataModels;
 using EnergyApp.DataModels.GeneratorFactor;
 using EnergyApp.DataModels.Report;
-using EnergyApp.Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EnergyApp.Controllers
 {
-    class GeneratorFactorMapController
+    public class FactorPair
     {
+        public double? ValueFactor;
+        public double? EmissionsFactor;
+    }
+
+    public class GeneratorFactorMapController
+    {
+        private static GeneratorFactorMapController instance = null;
+        public static GeneratorFactorMapController Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GeneratorFactorMapController();
+                }
+                return instance;
+            }
+        }
+
         private ReferenceData ReferenceData;
         private GeneratorFactorMap GeneratorFactorMap;
 
@@ -27,32 +43,84 @@ namespace EnergyApp.Controllers
             GeneratorFactorMap = XmlParser.ReadMap();
         }
 
-        public void GetFactor(EnergyGenerator generator)
+        public FactorPair GetFactor(EnergyGenerator generator)
         {
-            if (generator.Equals(typeof(WindGenerator)))
+            FactorPair FactorPair = new FactorPair();
+
+            if (generator.GetType().Equals(typeof(WindGenerator)))
             {
                 if (((WindGenerator)generator).Location == Location.Offshore)
                 {
-
+                    FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.OffshoreWind.ValueFactor);
+                    FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.OffshoreWind.EmissionsFactor);
                 }
                 else if (((WindGenerator)generator).Location == Location.Onshore)
                 {
-
+                    FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.OnshoreWind.ValueFactor);
+                    FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.OnshoreWind.EmissionsFactor);
                 }
             }
-            else if (generator.Equals(typeof(GasGenerator)))
+            else if (generator.GetType().Equals(typeof(GasGenerator)))
             {
-
+                FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.Gas.ValueFactor);
+                FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.Gas.EmissionsFactor);
             }
-            else if (generator.Equals(typeof(CoalGenerator)))
+            else if (generator.GetType().Equals(typeof(CoalGenerator)))
             {
-
+                FactorPair.ValueFactor = ConvertValueFactor(GeneratorFactorMap.Coal.ValueFactor);
+                FactorPair.EmissionsFactor = ConvertEmissionsFactor(GeneratorFactorMap.Coal.EmissionsFactor);
             }
             else
             {
                 Console.WriteLine("Unknown Generator Type");
+
+                FactorPair = null;
             }
 
+            return FactorPair;
+        }
+
+        private double? ConvertValueFactor(Factor factor)
+        {
+            switch (factor)
+            {
+                case Factor.NotSet:
+                    Console.WriteLine("Value Factor Not Set");
+                    return null;
+                case Factor.High:
+                    return ReferenceData.Factors.ValueFactor.High;
+                case Factor.Medium:
+                    return ReferenceData.Factors.ValueFactor.Medium;
+                case Factor.Low:
+                    return ReferenceData.Factors.ValueFactor.Low;
+                case Factor.NotApplicable:
+                    Console.WriteLine("Value Factor Can't be NotApplicable");
+                    return null;
+                default:
+                    Console.WriteLine("Unknown Factor");
+                    return null;
+            }
+        }
+
+        private double? ConvertEmissionsFactor(Factor factor)
+        {
+            switch (factor)
+            {
+                case Factor.NotSet:
+                    Console.WriteLine("Emissions Factor Not Set");
+                    return null;
+                case Factor.High:
+                    return ReferenceData.Factors.EmissionsFactor.High;
+                case Factor.Medium:
+                    return ReferenceData.Factors.EmissionsFactor.Medium;
+                case Factor.Low:
+                    return ReferenceData.Factors.EmissionsFactor.Low;
+                case Factor.NotApplicable:
+                    return null;
+                default:
+                    Console.WriteLine("Unknown Factor");
+                    return null;
+            }
         }
     }
 }

@@ -1,42 +1,69 @@
-﻿An XML file containing generator data (see accompanying file 
-GenerationReport.xml) is produced and provided as input into 
+﻿An XML file containing generator data 
+(see accompanying file 
+GenerationReport.xml) is produced and 
+provided as input into 
 an input folder on a regular basis.
-The solution is required to automatically pick up the received
-XML file as soon as it is placed in the input folder (location 
-of input folder is set in the Application app.config file), 
-perform parsing and data processing as appropriate to achieve the following:
+The solution is required to automatically 
+pick up the received
+XML file as soon as it is placed in the 
+input folder (location 
+of input folder is set in the Application
+app.config file), 
+perform parsing and data processing as 
+appropriate to achieve the following:
 
-1. It is required to calculate and output the Total Generation 
-Value for each generator.
+1. It is required to calculate and output
+the Total 
+Generation Value for each generator.
         
-2. It is required to calculate and output the generator with the
-highest Daily Emissions for each day along with the emission value.
+2. It is required to calculate and 
+output the 
+generator with thehighest Daily Emissions
+for each day along with the emission value.
         
-3. It is required to calculate and output Actual Heat Rate for 
-each coal generator.         
+3. It is required to calculate and output
+Actual Heat Rate for each coal generator.         
 
-The output should be a single XML file in the format as specified
-by an example accompanying file GenerationOutput.xml into an output 
-folder (location of output folder is set in the Application app.config file).
-Note that the provided XML examples are for the illustration only.
-They demonstrate the expected XML structure but do not contain the 
-matching data. For sake of clarity GenerationOutput.xml does not 
-provide a solution for GenerationReport.xml included in the package.
-Calculation Definitions and Reference Data
+The output should be a single XML file 
+in the format as specified
+by an example accompanying file 
+GenerationOutput.xml into an output 
+folder (location of output folder 
+is set in the Application app.config file).
+Note that the provided XML examples are 
+for the illustration only.
+They demonstrate the expected XML 
+structure but do not contain the 
+matching data. For sake of clarity 
+GenerationOutput.xml does not 
+provide a solution for 
+GenerationReport.xml 
+included in the package.
+Calculation Definitions 
+and Reference Data
 
-Daily Generation Value = Energy x Price x ValueFactor
+Daily Generation Value = 
+Energy x Price x ValueFactor
 
-Daily Emissions = Energy x EmissionRating x EmissionFactor
+Daily Emissions = 
+Energy x EmissionRating x EmissionFactor
 
-Actual Heat Rate = TotalHeatInput / ActualNetGeneration
+Actual Heat Rate = 
+TotalHeatInput / ActualNetGeneration
 
-Emissions only apply to fossil fuel generator types e.g. coal and gas. 
-There could be a varying number of generators of a given type in any one 
-GenerationReport.xml file that is produced.
+Emissions only apply to fossil fuel 
+generator types e.g. coal and gas. 
+There could be a varying number of 
+generators of a given type in any one 
+GenerationReport.xml file that is 
+produced.
 
-ValueFactor and EmissionsFactor is static data sourced from the accompanying 
-XML file ReferenceData.xml. Note: it is not possible to change static data 
-while the console application is running.
+ValueFactor and EmissionsFactor is 
+static data sourced from the accompanying 
+XML file ReferenceData.xml.
+Note: it is not possible to change 
+static data while the console application 
+is running.
 
 Generator Types map to factors as follows:
 
