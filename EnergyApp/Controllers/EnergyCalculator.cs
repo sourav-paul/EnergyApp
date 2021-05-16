@@ -21,9 +21,9 @@ namespace EnergyApp.Controllers
             }
         }
 
-        public static double? DailyEmissions(Day day, double emissionRating, double? emissionsFactor)
+        public static double? DailyEmissions(double energy, double emissionRating, double? emissionsFactor)
         {
-            return day.Energy * emissionRating * emissionsFactor;
+            return energy * emissionRating * emissionsFactor;
         }
 
         public static double ActualHeatRate(double totalHeatInput, double actualNetGeneration)

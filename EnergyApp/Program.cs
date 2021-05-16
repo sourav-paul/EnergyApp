@@ -2,6 +2,8 @@
 using EnergyApp.DataModels.Output;
 using EnergyApp.DataModels.Report;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EnergyApp
 {
@@ -16,16 +18,26 @@ namespace EnergyApp
         static void Main(string[] args)
         {
             Console.WriteLine("Energy App");
+            
+            Run();
+        }
 
+        private static void Run()
+        {
             GetGenerationReport();
 
+            CalculateOutput();
+
+            WriteReportToFile();
+        }
+
+        private static void CalculateOutput()
+        {
             CalculateTotalDailyGenerationValue();
 
             CalculateHighestDailyEmissions();
 
             CalculateActualHeatRate();
-
-            WriteReportToFile();
         }
 
         private static void GetGenerationReport()
@@ -72,12 +84,52 @@ namespace EnergyApp
 
         private static void CalculateHighestDailyEmissions()
         {
+            var gas_coal_generator = GenerationReport.Gas.Zip(GenerationReport.Coal, (gas, coal) => (gas, coal));
 
+            foreach (var generator in gas_coal_generator)
+            {
+                var gas_coal_days = generator.gas.Generation.Zip(generator.coal.Generation, (gasDay, coalDay) => (gasDay, coalDay));
+
+                foreach (var dayPair in gas_coal_days)
+                {
+                    if (dayPair.gasDay.Date == dayPair.coalDay.Date)
+                    {
+                        var gasDailyEmissions = EnergyCalculator.DailyEmissions(dayPair.gasDay.Energy,
+                                                            generator.gas.EmissionsRating,
+                                                            GeneratorFactorMapController.GetFactor(generator.gas).EmissionsFactor);
+
+                        var coalDailyEmissions = EnergyCalculator.DailyEmissions(dayPair.coalDay.Energy,
+                                                              generator.coal.EmissionsRating,
+                                                              GeneratorFactorMapController.GetFactor(generator.coal).EmissionsFactor);
+
+                        if (gasDailyEmissions > coalDailyEmissions)
+                        {
+                            GenerationOutput.MaxEmissionGenerators.Add(
+                                             new DataModels.Output.Day(generator.gas.Name, 
+                                                                       dayPair.gasDay.Date,
+                                                                       gasDailyEmissions));
+                        }
+                        else
+                        {
+                            GenerationOutput.MaxEmissionGenerators.Add(
+                                             new DataModels.Output.Day(generator.coal.Name,
+                                                                       dayPair.coalDay.Date,
+                                                                       coalDailyEmissions));
+                        }
+                    }
+                    else
+                    {
+                        // TODO: Handle uneven day counts
+                    }
+                }
+            }
         }
+
         private static void CalculateActualHeatRate()
         {
 
         }
+
         private static void WriteReportToFile()
         {
             

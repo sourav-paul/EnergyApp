@@ -35,7 +35,16 @@ namespace EnergyApp.DataModels.Output
     {
         public string Name;
         public DateTime Date;
-        public double Emission;
+        public double? Emissions;
+
+        public Day( string name = "Unnamed", 
+                    DateTime date = new DateTime(), 
+                    double? emissions = null)
+        {
+            Name = name;
+            Date = date;
+            Emissions = emissions;
+        }
     }
 
     public class ActualHeatRate
