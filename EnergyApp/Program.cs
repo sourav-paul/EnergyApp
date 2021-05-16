@@ -72,7 +72,9 @@ namespace EnergyApp
 
         private static void AddDailyGenerationValue(EnergyGenerator generator)
         {
-            Generator gen = new Generator(generator.Name);
+            Generator gen = new Generator();
+
+            gen.Name = generator.Name;
 
             foreach (var item in generator.Generation)
             {
@@ -104,17 +106,23 @@ namespace EnergyApp
 
                         if (gasDailyEmissions > coalDailyEmissions)
                         {
-                            GenerationOutput.MaxEmissionGenerators.Add(
-                                             new DataModels.Output.Day(generator.gas.Name, 
-                                                                       dayPair.gasDay.Date,
-                                                                       gasDailyEmissions));
+                            var day = new DataModels.Output.Day();
+
+                            day.Name = generator.gas.Name;
+                            day.Date = dayPair.gasDay.Date;
+                            day.Emissions = gasDailyEmissions;
+
+                            GenerationOutput.MaxEmissionGenerators.Add(day);
                         }
                         else
                         {
-                            GenerationOutput.MaxEmissionGenerators.Add(
-                                             new DataModels.Output.Day(generator.coal.Name,
-                                                                       dayPair.coalDay.Date,
-                                                                       coalDailyEmissions));
+                            var day = new DataModels.Output.Day();
+
+                            day.Name = generator.coal.Name;
+                            day.Date = dayPair.coalDay.Date;
+                            day.Emissions = coalDailyEmissions;
+
+                            GenerationOutput.MaxEmissionGenerators.Add(day);
                         }
                     }
                     else
@@ -131,13 +139,18 @@ namespace EnergyApp
             {
                 var heatRate = EnergyCalculator.ActualHeatRate(generator.TotalHeatInput, generator.ActualNetGeneration);
 
-                GenerationOutput.ActualHeatRates.Add(new ActualHeatRate(generator.Name, heatRate));
+                var actualHeatRate = new ActualHeatRate();
+
+                actualHeatRate.Name = generator.Name;
+                actualHeatRate.HeatRate = heatRate;
+
+                GenerationOutput.ActualHeatRates.Add(actualHeatRate);
             }
         }
 
         private static void WriteReportToFile()
         {
-            
+            XmlParser.WriteOutput(GenerationOutput);
         }
 
     }
