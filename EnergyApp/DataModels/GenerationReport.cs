@@ -43,7 +43,7 @@ namespace EnergyApp.DataModels.Report
 
     public class CoalGenerator : EnergyGenerator
     {
-        public double TotalHeatGeneration;
+        public double TotalHeatInput;
         public double ActualNetGeneration;
         public double EmissionsRating;
     }

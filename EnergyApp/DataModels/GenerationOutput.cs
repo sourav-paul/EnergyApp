@@ -21,35 +21,20 @@ namespace EnergyApp.DataModels.Output
     
     public class Generator
     {
-        public string Name;
-        public double? Total;
-
-        public Generator(string name = "Unnamed")
-        {
-            Name = name;
-            Total = 0;
-        }
+        public string Name = "Unnamed";
+        public double? Total = 0.0;
     }
 
     public class Day
     {
-        public string Name;
-        public DateTime Date;
-        public double? Emissions;
-
-        public Day( string name = "Unnamed", 
-                    DateTime date = new DateTime(), 
-                    double? emissions = null)
-        {
-            Name = name;
-            Date = date;
-            Emissions = emissions;
-        }
+        public string Name = "Unnamed";
+        public DateTime Date = new DateTime();
+        public double? Emissions = null;
     }
 
     public class ActualHeatRate
     {
-        public string Name;
-        public double HeatRate;
+        public string Name = "Unnamed";
+        public double? HeatRate = null;
     }
 }

@@ -10,6 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataFiles\input-directory\" />
+    <Folder Include="DataFiles\output-directory\" />
     <Folder Include="DataFiles\Test\" />
   </ItemGroup>
 
