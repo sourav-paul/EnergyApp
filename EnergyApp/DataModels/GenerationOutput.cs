@@ -50,6 +50,12 @@ namespace EnergyApp.DataModels.Output
     public class ActualHeatRate
     {
         public string Name;
-        public double HeatRate;
+        public double? HeatRate;
+
+        public ActualHeatRate(string name = "Unnamed", double? heatRate = null)
+        {
+            Name = name;
+            HeatRate = heatRate;
+        }
     }
 }

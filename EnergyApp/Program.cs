@@ -127,7 +127,12 @@ namespace EnergyApp
 
         private static void CalculateActualHeatRate()
         {
+            foreach (var generator in GenerationReport.Coal)
+            {
+                var heatRate = EnergyCalculator.ActualHeatRate(generator.TotalHeatInput, generator.ActualNetGeneration);
 
+                GenerationOutput.ActualHeatRates.Add(new ActualHeatRate(generator.Name, heatRate));
+            }
         }
 
         private static void WriteReportToFile()

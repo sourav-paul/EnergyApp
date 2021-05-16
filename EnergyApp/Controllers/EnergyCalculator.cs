@@ -26,9 +26,9 @@ namespace EnergyApp.Controllers
             return energy * emissionRating * emissionsFactor;
         }
 
-        public static double ActualHeatRate(double totalHeatInput, double actualNetGeneration)
+        public static double? ActualHeatRate(double? totalHeatInput, double? actualNetGeneration)
         {
-            return totalHeatInput * actualNetGeneration;
+            return totalHeatInput / actualNetGeneration;
         }
     }
 }
