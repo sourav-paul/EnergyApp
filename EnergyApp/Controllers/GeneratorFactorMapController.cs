@@ -116,7 +116,6 @@ namespace EnergyApp.Controllers
                 case Factor.Low:
                     return ReferenceData.Factors.EmissionsFactor.Low;
                 case Factor.NotApplicable:
-                    Console.WriteLine("Emissions Factor Can't be NotApplicable");
                     return null;
                 default:
                     Console.WriteLine("Unknown Factor");

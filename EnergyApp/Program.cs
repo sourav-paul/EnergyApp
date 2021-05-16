@@ -68,11 +68,6 @@ namespace EnergyApp
             }
 
             GenerationOutput.Totals.Add(gen);
-
-            Console.WriteLine(GenerationOutput.Totals[0].Total);
-            Console.WriteLine(GenerationOutput.Totals[1].Total);
-            Console.WriteLine(GenerationOutput.Totals[2].Total);
-            Console.WriteLine(GenerationOutput.Totals[3].Total);
         }
 
         private static void CalculateHighestDailyEmissions()
