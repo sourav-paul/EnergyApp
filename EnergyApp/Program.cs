@@ -17,13 +17,39 @@ namespace EnergyApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Energy App");
-            
+            Greetings();
+
             Run();
+
+            ObserveFiles();
         }
 
+        private static void Greetings()
+        {
+            Console.WriteLine("\t\t\t--------------");
+            Console.WriteLine("\t\t\t| Energy App |");
+            Console.WriteLine("\t\t\t--------------\n");
+
+        }
+        private static void ObserveFiles()
+        {
+            FileObserver fileObserver = new FileObserver();
+        }
         private static void Run()
         {
+            Console.WriteLine("App started with provided Report, Reference, and Generator-Factor map.\n");
+
+            GetGenerationReport();
+
+            CalculateOutput();
+
+            WriteReportToFile();
+        }
+
+        public static void RestartApp()
+        {
+            Console.WriteLine($"\nRecalculation with new Generation Report provided at {DateTime.UtcNow}.\n");
+
             GetGenerationReport();
 
             CalculateOutput();
@@ -68,6 +94,8 @@ namespace EnergyApp
             {
                 AddDailyGenerationValue(generator);
             }
+
+            Console.WriteLine("Total Daily Generation Calculation Done!");
         }
 
         private static void AddDailyGenerationValue(EnergyGenerator generator)
@@ -131,6 +159,8 @@ namespace EnergyApp
                     }
                 }
             }
+
+            Console.WriteLine("\nHighest Emission Calculation Done!");
         }
 
         private static void CalculateActualHeatRate()
@@ -146,11 +176,26 @@ namespace EnergyApp
 
                 GenerationOutput.ActualHeatRates.Add(actualHeatRate);
             }
+
+            Console.WriteLine("\nActual Heat Rate Calculation Done!");
         }
 
         private static void WriteReportToFile()
         {
             XmlParser.WriteOutput(GenerationOutput);
+
+            Console.WriteLine("\nOutput File Saved!\n");
+
+            GeneratorFactorMapController = new GeneratorFactorMapController();
+
+            GenerationReport = new GenerationReport();
+
+            GenerationOutput = new GenerationOutput();
+        }
+
+        private static void StoreOldResult()
+        {
+
         }
 
     }

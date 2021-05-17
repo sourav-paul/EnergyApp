@@ -12,7 +12,7 @@
   <ItemGroup>
     <Folder Include="DataFiles\input-directory\" />
     <Folder Include="DataFiles\output-directory\" />
-    <Folder Include="DataFiles\Test\" />
+    <Folder Include="DataFiles\Test\input-directory\" />
   </ItemGroup>
 
 </Project>
