@@ -61,7 +61,7 @@ namespace EnergyApp.Controllers
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(GenerationOutput));
 
-            TextWriter writer = new StreamWriter(ConfigurationManager.AppSettings["output-directory"]);
+            using TextWriter writer = new StreamWriter(ConfigurationManager.AppSettings["output-directory"]);
 
             xmlSerializer.Serialize(writer, GenerationOutput);
         }

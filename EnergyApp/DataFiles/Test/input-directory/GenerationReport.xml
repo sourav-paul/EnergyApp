@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <GenerationReport>
   <Wind>
     <WindGenerator>
@@ -16,6 +16,11 @@
         </Day>
         <Day>
           <Date>2017-01-03T00:00:00+00:00</Date>
+          <Energy>87.843</Energy>
+          <Price>22.015</Price>
+        </Day>
+        <Day>
+          <Date>2017-01-04T00:00:00+00:00</Date>
           <Energy>87.843</Energy>
           <Price>22.015</Price>
         </Day>
@@ -37,6 +42,11 @@
         </Day>
         <Day>
           <Date>2017-01-03T00:00:00+00:00</Date>
+          <Energy>98.167</Energy>
+          <Price>24.059</Price>
+        </Day>
+        <Day>
+          <Date>2017-01-04T00:00:00+00:00</Date>
           <Energy>98.167</Energy>
           <Price>24.059</Price>
         </Day>
@@ -63,6 +73,11 @@
           <Energy>240.325</Energy>
           <Price>17.551</Price>
         </Day>
+        <Day>
+          <Date>2017-01-04T00:00:00+00:00</Date>
+          <Energy>240.325</Energy>
+          <Price>17.551</Price>
+        </Day>
       </Generation>
       <EmissionsRating>0.038</EmissionsRating>
     </GasGenerator>
@@ -83,6 +98,11 @@
         </Day>
         <Day>
           <Date>2017-01-03T00:00:00+00:00</Date>
+          <Energy>0</Energy>
+          <Price>11.815</Price>
+        </Day>
+        <Day>
+          <Date>2017-01-04T00:00:00+00:00</Date>
           <Energy>0</Energy>
           <Price>11.815</Price>
         </Day>

@@ -8,12 +8,12 @@ namespace EnergyApp.Controllers
     {
         public FileObserver()
         {
-            string InputLocation = ConfigurationManager.AppSettings["test-input-directory"];
-            string OutputLocation = ConfigurationManager.AppSettings["test-output-directory"];
+            string InputLocation = ConfigurationManager.AppSettings["input-directory"];
+            string OutputLocation = ConfigurationManager.AppSettings["output-directory"];
             string ReferenceDataLocation = ConfigurationManager.AppSettings["reference-directory"];
             string GeneratorFactorMapLocation = ConfigurationManager.AppSettings["generator-factor-map-directory"];
 
-            using var observer = new FileSystemWatcher(InputLocation);
+            using var observer = new FileSystemWatcher(InputLocation.Replace("GenerationReport.xml", ""));
 
             observer.NotifyFilter =
                                     NotifyFilters.Attributes |
@@ -31,6 +31,39 @@ namespace EnergyApp.Controllers
             observer.Filter = "*.xml";
             observer.EnableRaisingEvents = true;
 
+            FileObserverMessages(InputLocation, OutputLocation, ReferenceDataLocation, GeneratorFactorMapLocation);
+        }
+
+        private FileSystemWatcher AssignFileObserver(string targetDirectory)
+        {
+            using var observer = new FileSystemWatcher(targetDirectory);
+
+            observer.NotifyFilter =
+                                    NotifyFilters.Attributes |
+                                    NotifyFilters.CreationTime |
+                                    NotifyFilters.DirectoryName |
+                                    NotifyFilters.FileName |
+                                    NotifyFilters.LastWrite;
+
+            observer.Changed += OnChanged;
+            observer.Created += OnCreated;
+            observer.Deleted += OnDeleted;
+            observer.Renamed += OnRenamed;
+            observer.Error += OnError;
+
+            observer.Filter = "*.xml";
+            observer.EnableRaisingEvents = true;
+
+            return observer;
+        }
+
+        private void UnassignFileObserver()
+        {
+
+        }
+
+        private static void FileObserverMessages(string InputLocation, string OutputLocation, string ReferenceDataLocation, string GeneratorFactorMapLocation)
+        {
             Console.WriteLine("Observing XML files for runtime modifications.\n");
 
             Console.WriteLine("Report location               : " + InputLocation);
@@ -42,34 +75,43 @@ namespace EnergyApp.Controllers
             Console.ReadLine();
         }
 
-        private static void OnChanged(object sender, FileSystemEventArgs e)
+        private void OnChanged(object sender, FileSystemEventArgs e)
         {
             if (e.ChangeType != WatcherChangeTypes.Changed)
             {
                 return;
             }
             Console.WriteLine($"\nChanged: {e.FullPath}");
+
+            Program.RestartApp();
         }
 
-        private static void OnCreated(object sender, FileSystemEventArgs e)
+        private void OnCreated(object sender, FileSystemEventArgs e)
         {
             Console.WriteLine($"\nCreated: {e.FullPath}");
+            
+            Program.RestartApp();
         }
 
-        private static void OnDeleted(object sender, FileSystemEventArgs e) =>
+        private void OnDeleted(object sender, FileSystemEventArgs e)
+        {
             Console.WriteLine($"\nDeleted: {e.FullPath}");
 
-        private static void OnRenamed(object sender, RenamedEventArgs e)
+            Console.WriteLine("\nPlace the GenerationReport.xml in the input directory.");
+        }
+            
+
+        private void OnRenamed(object sender, RenamedEventArgs e)
         {
             Console.WriteLine($"\nRenamed:");
             Console.WriteLine($"    Old: {e.OldFullPath}");
             Console.WriteLine($"    New: {e.FullPath}");
         }
 
-        private static void OnError(object sender, ErrorEventArgs e) =>
+        private void OnError(object sender, ErrorEventArgs e) =>
             PrintException(e.GetException());
 
-        private static void PrintException(Exception? ex)
+        private void PrintException(Exception? ex)
         {
             if (ex != null)
             {
