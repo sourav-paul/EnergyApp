@@ -17,13 +17,30 @@ namespace EnergyApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Energy App");
-            
+            Greetings();
+
             Run();
+
+            ObserveFiles();
         }
 
+        
+
+        private static void Greetings()
+        {
+            Console.WriteLine("\t\t\t--------------");
+            Console.WriteLine("\t\t\t| Energy App |");
+            Console.WriteLine("\t\t\t--------------\n");
+
+        }
+        private static void ObserveFiles()
+        {
+            FileObserver fileObserver = new FileObserver();
+        }
         private static void Run()
         {
+            Console.WriteLine("App started with provided Report, Reference, and Generator-Factor map.\n");
+
             GetGenerationReport();
 
             CalculateOutput();
